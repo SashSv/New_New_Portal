@@ -1,0 +1,49 @@
+<!--  наследуемся от шаблона default.html, который мы создавали ещё во времена flatpages -->
+{%extends 'flatpages/default.html'%}
+
+{% load custom_filters %}
+
+{% block title %}
+News
+{% endblock title %}
+
+{% block content %}
+    <h1>Вы действительно хотите удалить данную статью?</h1>
+    <table>
+        <thead>
+            <th>
+                Заголовок
+            </th>
+            <th>
+                Дата публикации
+            </th>
+            <th>
+                Описание
+            </th>
+            <th>
+                Автор
+            </th>
+        </thead>
+        <tr>
+            <td>
+                {{ article.title | censor }}
+            </td>
+            <td>
+                {{ article.datetime | date:'d M Y' }}
+            </td>
+            <td>
+                {{ article.description | truncatewords:20 | censor }}
+            </td>
+            <td>
+                {{ article.author }}
+            </td>
+        </tr>
+    </table>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form }} <!-- Теперь нам нужна только готовая форма и кнопка -->
+        <input type="submit" value="Подтвердить">
+    </form>
+
+{% endblock content %}

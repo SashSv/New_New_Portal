@@ -1,0 +1,40 @@
+<!--  наследуемся от шаблона default.html, который мы создавали ещё во времена flatpages -->
+{%extends 'flatpages/default.html'%}
+
+{% load custom_filters %}
+
+<!-- Название у нас будет Article -->
+{% block title %}
+Article
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим сам товар, ID которого было передано в адрес -->
+{% block content %}
+<h1>{{ article.title | censor }}</h1>
+<h3>{{ article.author }}</h3>
+{% if article %}
+        <table>
+            <tr>
+                <td>
+                    Дата и время публикации
+                </td>
+                <td>
+                    Описание
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ article.datetime | date:'d-M-Y' }}
+                    {{ article.datetime | time:'H:i' }}
+                </td>
+                <td>
+                    {{ article.description | censor }}
+                </td>
+            </tr>
+        </table>
+        <a href="{% url 'update' article.id %}"><u> Редактировать </u></a>
+        <a href="{% url 'delete' article.id %}"><u> Удалить </u></a>
+    {% else %}
+        <h2>Здесь новости нет:(</h2>
+    {% endif %}
+{% endblock content %}
