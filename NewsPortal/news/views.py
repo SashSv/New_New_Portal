@@ -61,22 +61,3 @@ class SearchArticleList(ListView):
         context = super().get_context_data(**kwargs)
         context['filter'] = ArticleFilter(self.request.GET, queryset=self.get_queryset())  # вписываем наш фильтр в контекст
         return context
-
-# class SearchArticleList(ListView):
-#     model = Article
-#     template_name = 'search.html'
-#     context_object_name = 'news'
-#     ordering = ['-datetime']
-#     paginate_by = 10
-
-    # def get_filter(self):
-    #     return ArticleFilter(self.request.GET, queryset=super().get_queryset())
-    #
-    # def get_queryset(self):
-    #     return self.get_filter().qs
-    #
-    # def get_context_data(self, *args, **kwargs):  # забираем отфильтрованные объекты переопределяя метод get_context_data у наследуемого класса (привет, полиморфизм, мы скучали!!!)
-    #     return {
-    #         **super().get_context_data(*args, **kwargs),
-    #         "filter": self.get_filter(),
-    #     }
